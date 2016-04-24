@@ -122,7 +122,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    public static void configureFileChooser(final FileChooser fileChooser, String title){
+    private static void configureFileChooser(final FileChooser fileChooser, String title){
         
         fileChooser.setTitle(title);
         fileChooser.setInitialDirectory(
@@ -136,7 +136,7 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
-    public static void BulkFileRenamer(String path, String name){
+    private static void BulkFileRenamer(String path, String name){
         File dir = new File(path);
 
         if (dir.exists()) {
@@ -171,7 +171,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
-    public static String getExtension(String fileName){
+    private static String getExtension(String fileName){
         
         try {
             return "."+fileName.substring(fileName.lastIndexOf(".") + 1);
