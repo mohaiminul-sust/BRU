@@ -22,8 +22,8 @@
           <Menu mnemonicParsing="false" text="List">
             <items>
               <MenuItem mnemonicParsing="false" text="Edit" />
-                  <MenuItem mnemonicParsing="false" text="Remove" />
-                  <MenuItem mnemonicParsing="false" text="Remove All" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleListMenuRemoveAction" text="Remove" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleListMenuRemoveAllAction" text="Remove All" />
             </items>
           </Menu>
         </menus>

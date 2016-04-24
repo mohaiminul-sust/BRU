@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -67,10 +66,12 @@ public class FXMLDocumentController implements Initializable {
             
             if(dir.isDirectory()){
                 File[] files = dir.listFiles();
+                
                 //clear and enable list view
                 fileList.setItems(null);
                 fileList.setDisable(false);
                 listItems = FXCollections.observableArrayList();
+                
                 //add file names to list view
                 for(File file: files){
                     String fileName = file.getName();
@@ -84,14 +85,28 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    @FXML
+    private void handleListMenuRemoveAction(ActionEvent event){
+        String fileName = fileList.getSelectionModel().getSelectedItem().toString();
+        listItems.remove(fileName);
+        fileList.setItems(listItems);
+    }
+    
+    @FXML
+    private void handleListMenuRemoveAllAction(ActionEvent event){
+        initList();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        initList();
+    }    
+    
+    private void initList(){
         listItems = FXCollections.observableArrayList("No files or directory selected");
         fileList.setItems(listItems);
         fileList.setDisable(true);
-    }    
+    }
     
     private void openFile(File file){
         try {
