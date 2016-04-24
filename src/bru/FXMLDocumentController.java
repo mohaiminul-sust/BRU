@@ -13,9 +13,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -27,10 +31,11 @@ import javafx.stage.Window;
 public class FXMLDocumentController implements Initializable {
     
     private final Desktop desktop = Desktop.getDesktop();
-    
+    private ObservableList<String> listItems;
     @FXML
     public Window stage;
-
+    public ListView fileList;
+    
     @FXML
     private void handleExitFileMenuAction(ActionEvent event) {
         System.exit(0);
@@ -47,7 +52,6 @@ public class FXMLDocumentController implements Initializable {
             files.stream().forEach((file) -> {
                 openFile(file);
             });
-    
         }
         
     }
@@ -59,15 +63,34 @@ public class FXMLDocumentController implements Initializable {
         
         if(selectedDir != null){
             String path = selectedDir.getAbsolutePath();
-            System.out.println(path);
+            File dir = new File(path);
             
-            BulkFileRenamer(path, selectedDir.getName());
+            if(dir.isDirectory()){
+                File[] files = dir.listFiles();
+                //clear and enable list view
+                fileList.setItems(null);
+                fileList.setDisable(false);
+                listItems = FXCollections.observableArrayList();
+                //add file names to list view
+                for(File file: files){
+                    String fileName = file.getName();
+                    String filePath = file.getPath();
+                    listItems.add(fileName);
+                }
+                
+                fileList.setItems(listItems);
+            }
+//            BulkFileRenamer(path, selectedDir.getName());
         }
     }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        listItems = FXCollections.observableArrayList("No files or directory selected");
+        fileList.setItems(listItems);
+        fileList.setDisable(true);
     }    
     
     private void openFile(File file){
@@ -100,21 +123,37 @@ public class FXMLDocumentController implements Initializable {
     
     public static void BulkFileRenamer(String path, String name){
         File dir = new File(path);
-        File[] files = dir.listFiles();
-        
-        int i=0;
-        for(File file:files){
-            String oldName = file.getName();
-            System.out.println("Old Name: "+oldName);
-            String extension = getExtension(oldName);
-            String newName = name+"_"+i+extension;
-            String newPath = path+"\\"+newName;
-            file.renameTo(new File(newPath));
-            System.out.println(oldName+" changed to "+newName);
-            i++;
+
+        if (dir.exists()) {
+
+            if (dir.isDirectory()) {
+                File[] files = dir.listFiles();
+
+                int i = 0;
+                for (File file : files) {
+                    String oldName = file.getName();
+                    System.out.println("Old Name: " + oldName);
+                    String extension = getExtension(oldName);
+                    String newName = name + "_" + i + extension;
+                    String newPath = path + "\\" + newName;
+                    file.renameTo(new File(newPath));
+                    System.out.println(oldName + " changed to " + newName);
+                    i++;
+                }
+            } else if(dir.isFile()){
+                String oldName = dir.getName();
+                System.out.println("Old Name: " + oldName);
+                String extension = getExtension(oldName);
+                String newName = name + extension;
+                String newPath = path + "\\" + newName;
+                dir.renameTo(new File(newPath));
+                System.out.println(oldName + " changed to " + newName);
+            }
+            
+            System.out.println("task finished !");
+
         }
-        
-        System.out.println("task finished !");
+
     }
     
     public static String getExtension(String fileName){

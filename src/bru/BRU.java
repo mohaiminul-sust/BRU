@@ -23,6 +23,7 @@ public class BRU extends Application {
         
         Scene scene = new Scene(root);
         
+        stage.setTitle("BRU");
         stage.setScene(scene);
         stage.show();
     }
