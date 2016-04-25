@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -125,10 +126,25 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleListMenuRemoveAction(ActionEvent event) {
-        String fileName = fileList.getSelectionModel().getSelectedItem().toString();
-        listItems.remove(fileName);
-        filePaths.remove(fileName);
+        List<String> fileNames = new ArrayList<String>();
+        fileNames = fileList.getSelectionModel().getSelectedItems();
+        
+        Iterator listIter = fileNames.iterator();
+        
+        while(listIter.hasNext()){
+            String fileName = listIter.next().toString();
+            filePaths.remove(fileName);
+        }
+        
+        listItems.clear();
+        listItems.addAll(filePaths.keySet());
         fileList.setItems(listItems);
+        
+        //Empty List Handler
+        if(listItems.isEmpty()){
+            initList();
+        }
+        
         printHashMap(); //debug
     }
     
