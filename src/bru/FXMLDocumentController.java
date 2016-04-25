@@ -9,6 +9,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,8 +20,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -33,6 +34,7 @@ public class FXMLDocumentController implements Initializable {
     
     private final Desktop desktop = Desktop.getDesktop();
     private ObservableList<String> listItems;
+    private HashMap<String, String> filePaths = new HashMap<>();
     
     @FXML
     public Window stage;
@@ -52,12 +54,21 @@ public class FXMLDocumentController implements Initializable {
         configureFileChooser(fileChooser, "Open files for renaming");
         final List<File> files = fileChooser.showOpenMultipleDialog(stage);
         
-        if(files != null){
-            files.stream().forEach((file) -> {
-                openFile(file);
-            });
+        //clear and enable list view
+        fileList.setItems(null);
+        fileList.setDisable(false);
+        listItems = FXCollections.observableArrayList();
+        filePaths.clear();
+        
+        for (File file: files){
+            String fileName = file.getName();
+            String filePath = file.getPath();
+            listItems.add(fileName);
+            filePaths.put(fileName, filePath);
         }
         
+        fileList.setItems(listItems);
+        printHashMap(); //debug
     }
     
     @FXML
@@ -76,25 +87,43 @@ public class FXMLDocumentController implements Initializable {
                 fileList.setItems(null);
                 fileList.setDisable(false);
                 listItems = FXCollections.observableArrayList();
+                filePaths.clear();
                 
                 //add file names to list view
                 for(File file: files){
                     String fileName = file.getName();
                     String filePath = file.getPath();
                     listItems.add(fileName);
+                    filePaths.put(fileName, filePath);
                 }
                 
                 fileList.setItems(listItems);
+                printHashMap(); //debug
             }
-//            BulkFileRenamer(path, selectedDir.getName());
         }
     }
     
     @FXML
-    private void handleListMenuRemoveAction(ActionEvent event){
+    private void handleRenameFileAction(ActionEvent event){
+        
+        ObservableList<String> list = fileList.getItems();
+        
+        for (String listItem: list){
+            if(filePaths.containsKey(listItem)){
+                String mapItem = filePaths.get(listItem);
+                String path = getPath(mapItem);
+                System.out.println(path);
+            }
+        }
+    }
+    
+    @FXML
+    private void handleListMenuRemoveAction(ActionEvent event) {
         String fileName = fileList.getSelectionModel().getSelectedItem().toString();
         listItems.remove(fileName);
+        filePaths.remove(fileName);
         fileList.setItems(listItems);
+        printHashMap(); //debug
     }
     
     @FXML
@@ -105,29 +134,18 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initList();
+        fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }    
     
     //empty file list and listItems
     private void initList(){
         listItems = FXCollections.observableArrayList("No files or directory selected");
+        filePaths.clear();
         fileList.setItems(listItems);
         fileList.setDisable(true);
+        printHashMap(); //debug
     }
-    
-    private void openFile(File file){
-        try {
-            desktop.open(file);
-            
-        } catch (IOException ex) {
-            
-            Logger.getLogger(
-                    this.getClass().getName()).log(
-                            Level.SEVERE, null, ex
-            );
-            
-        }
-    }
-    
+   
     private static void configureFileChooser(final FileChooser fileChooser, String title){
         
         fileChooser.setTitle(title);
@@ -184,6 +202,29 @@ public class FXMLDocumentController implements Initializable {
         } catch (Exception ex) {
             return "";
         }
+    }
+    
+    private static String getPath(String mapItem){
+        try {
+            return mapItem.substring(mapItem.lastIndexOf("=") + 1);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+    
+    private void openFile(File file) {
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(
+                    this.getClass().getName()).log(
+                            Level.SEVERE, null, ex
+                    );
+        }
+    }
+    
+    private void printHashMap(){
+        System.out.println(filePaths);
     }
     
 }

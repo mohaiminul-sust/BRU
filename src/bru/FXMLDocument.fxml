@@ -20,6 +20,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleOpenFileMenuAction" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#handleOpenDirectoryFileMenuAction" text="Open Directory" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleRenameFileAction" text="Rename" />
                   <MenuItem mnemonicParsing="false" onAction="#handleExitFileMenuAction" text="Exit" />
             </items>
           </Menu>
@@ -38,19 +39,19 @@
          </effect>
       </ListView>
       <Label layoutX="6.0" layoutY="265.0" prefHeight="20.0" prefWidth="56.0" stylesheets="@StyleSheet.css" text="File List" />
-      <Accordion layoutY="41.0" prefHeight="205.0" prefWidth="619.0">
+      <Accordion layoutY="50.0" prefHeight="196.0" prefWidth="619.0">
         <panes>
-          <TitledPane animated="false" text="Renaming Options">
+          <TitledPane animated="false" text="Indexed Renaming">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="File Properties (META)">
+          <TitledPane animated="false" text="Pattern Renaming">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </TitledPane>
-          <TitledPane animated="false" prefHeight="188.0" prefWidth="613.0" text="EMPTY">
+          <TitledPane animated="false" prefHeight="188.0" prefWidth="613.0" text="Meta Editing">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
