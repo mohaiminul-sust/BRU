@@ -9,6 +9,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -107,16 +108,19 @@ public class FXMLDocumentController implements Initializable {
     private void handleRenameFileAction(ActionEvent event){
         
         ObservableList<String> list = fileList.getItems();
-      
-//        for (String listItem: list){
-//            if(filePaths.containsKey(listItem)){
-//                String mapItem = filePaths.get(listItem);
-//                String path = getPath(mapItem);
-//                System.out.println(path);
-//            }
-//        }
-//        filePaths.remove(list)
-            
+        List<String> paths = new ArrayList<String>();
+
+        for (String listItem: list){
+            if(filePaths.containsKey(listItem)){
+                String mapItem = filePaths.get(listItem);
+                String path = getPath(mapItem);
+                paths.add(path);
+            }else{
+                System.err.println("Item not in hashmap !");
+            }
+        }
+        System.out.println(paths);
+
     }
     
     @FXML
@@ -163,10 +167,14 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private static String getPath(String mapItem){
+        
+        String path = "";
+
         try {
             return mapItem.substring(mapItem.lastIndexOf("=") + 1);
         } catch (Exception ex) {
-            return "";
+            System.out.println("Error : "+ex);
+            return path;
         }
     }
     
