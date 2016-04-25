@@ -107,14 +107,16 @@ public class FXMLDocumentController implements Initializable {
     private void handleRenameFileAction(ActionEvent event){
         
         ObservableList<String> list = fileList.getItems();
-        
-        for (String listItem: list){
-            if(filePaths.containsKey(listItem)){
-                String mapItem = filePaths.get(listItem);
-                String path = getPath(mapItem);
-                System.out.println(path);
-            }
-        }
+      
+//        for (String listItem: list){
+//            if(filePaths.containsKey(listItem)){
+//                String mapItem = filePaths.get(listItem);
+//                String path = getPath(mapItem);
+//                System.out.println(path);
+//            }
+//        }
+//        filePaths.remove(list)
+            
     }
     
     @FXML
@@ -158,50 +160,6 @@ public class FXMLDocumentController implements Initializable {
             new FileChooser.ExtensionFilter("PNG", "*.png")
         );
         
-    }
-    
-    private static void BulkFileRenamer(String path, String name){
-        File dir = new File(path);
-
-        if (dir.exists()) {
-
-            if (dir.isDirectory()) {
-                File[] files = dir.listFiles();
-
-                int i = 0;
-                for (File file : files) {
-                    String oldName = file.getName();
-                    System.out.println("Old Name: " + oldName);
-                    String extension = getExtension(oldName);
-                    String newName = name + "_" + i + extension;
-                    String newPath = path + "\\" + newName;
-                    file.renameTo(new File(newPath));
-                    System.out.println(oldName + " changed to " + newName);
-                    i++;
-                }
-            } else if(dir.isFile()){
-                String oldName = dir.getName();
-                System.out.println("Old Name: " + oldName);
-                String extension = getExtension(oldName);
-                String newName = name + extension;
-                String newPath = path + "\\" + newName;
-                dir.renameTo(new File(newPath));
-                System.out.println(oldName + " changed to " + newName);
-            }
-            
-            System.out.println("task finished !");
-
-        }
-
-    }
-    
-    private static String getExtension(String fileName){
-        
-        try {
-            return "."+fileName.substring(fileName.lastIndexOf(".") + 1);
-        } catch (Exception ex) {
-            return "";
-        }
     }
     
     private static String getPath(String mapItem){

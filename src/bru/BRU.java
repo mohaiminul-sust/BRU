@@ -23,7 +23,7 @@ public class BRU extends Application {
         
         Scene scene = new Scene(root);
         
-        stage.setTitle("Bulk Renaming Utility");
+        stage.setTitle("");
         stage.setScene(scene);
         stage.show();
     }

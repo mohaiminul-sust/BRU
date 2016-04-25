@@ -35,11 +35,11 @@
       </MenuBar>
       <ListView fx:id="fileList" layoutY="295.0" prefHeight="178.0" prefWidth="619.0" styleClass="list-cell" stylesheets="@StyleSheet.css">
          <effect>
-            <InnerShadow blurType="GAUSSIAN" color="#2287da" />
+            <InnerShadow blurType="GAUSSIAN" color="#157cd0" />
          </effect>
       </ListView>
-      <Label layoutX="6.0" layoutY="265.0" prefHeight="20.0" prefWidth="56.0" stylesheets="@StyleSheet.css" text="File List" />
-      <Accordion layoutY="50.0" prefHeight="196.0" prefWidth="619.0">
+      <Label layoutX="6.0" layoutY="265.0" prefHeight="21.0" prefWidth="113.0" stylesheets="@StyleSheet.css" text="Rename Queue" />
+      <Accordion layoutY="50.0" prefHeight="196.0" prefWidth="619.0" styleClass="list-cell" stylesheets="@StyleSheet.css">
         <panes>
           <TitledPane animated="false" text="Indexed Renaming">
             <content>
