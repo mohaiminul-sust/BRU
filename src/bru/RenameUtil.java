@@ -50,7 +50,7 @@ public class RenameUtil {
                         i++;
                     }
                 } else if (dir.isFile()) {
-                    System.out.println("indexed renaming supported for single file");
+                    System.out.println("indexed renaming not supported for single file");
                 }
 
                 System.out.println("task finished !");
