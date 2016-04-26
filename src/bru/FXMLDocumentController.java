@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -66,7 +65,6 @@ public class FXMLDocumentController implements Initializable {
         
     @FXML
     private void handleOpenFileMenuAction(ActionEvent event) {
-        
         final FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, "Open files for renaming");
         final List<File> files = fileChooser.showOpenMultipleDialog(stage);
@@ -122,7 +120,6 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleRenameFileAction(ActionEvent event){
-        
         ObservableList<String> list = fileList.getItems();
         List<String> paths = new ArrayList<String>();
 
@@ -146,7 +143,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleListMenuRemoveAction(ActionEvent event) {
-        List<String> fileNames = new ArrayList<String>();
+        List<String> fileNames = new ArrayList<>();
         fileNames = fileList.getSelectionModel().getSelectedItems();
         
         Iterator listIter = fileNames.iterator();
@@ -211,7 +208,6 @@ public class FXMLDocumentController implements Initializable {
     }
    
     private static void configureFileChooser(final FileChooser fileChooser, String title){
-        
         fileChooser.setTitle(title);
         fileChooser.setInitialDirectory(
             new File(System.getProperty("user.home"))
@@ -225,11 +221,11 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private static String getPath(String mapItem){
-        
         String path = "";
 
         try {
-            return mapItem.substring(mapItem.lastIndexOf("=") + 1);
+            path = mapItem.substring(mapItem.lastIndexOf("=") + 1);
+            return path;
         } catch (Exception ex) {
             System.out.println("Error : "+ex);
             return path;
