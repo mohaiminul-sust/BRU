@@ -41,6 +41,7 @@ public class FXMLDocumentController implements Initializable {
     private final Desktop desktop = Desktop.getDesktop();
     private ObservableList<String> listItems;
     private HashMap<String, String> filePaths = new HashMap<>();
+    private RenameUtil BRU;
     
     @FXML
     public Window stage;
@@ -49,6 +50,7 @@ public class FXMLDocumentController implements Initializable {
     public Button removeAllButton;
     public TextField patternHeader;
     public TextField startingAt;
+    public TextField nameSeparator;
     public ComboBox patternLocation;
     public TextField numberOfDigits;
     public Accordion optionContainer;
@@ -135,10 +137,13 @@ public class FXMLDocumentController implements Initializable {
         
         String pattern = patternHeader.getText();
         String location = patternLocation.getValue().toString();
+        String separator = nameSeparator.getText().toString();
         int startsAt = Integer.valueOf(startingAt.getText());
         int numDigits = Integer.valueOf(numberOfDigits.getText());
         
         //call renamer func from RenameUtil Class
+        BRU = new RenameUtil(paths);
+        BRU.IndexedRenaming(startsAt, pattern, location, separator, numDigits);
     }
     
     @FXML
@@ -205,6 +210,9 @@ public class FXMLDocumentController implements Initializable {
         
         //# of digits
         numberOfDigits.setText("2");
+        
+        //set separator
+        nameSeparator.setText("_");
     }
    
     private static void configureFileChooser(final FileChooser fileChooser, String title){

@@ -23,9 +23,11 @@ public class RenameUtil {
         this.paths = paths;
     }
 
-    public void IndexedRenaming(int starts_from, String name) {
+    public void IndexedRenaming(int starts_from, String name, String location, String separator, int numDigits) {
 
         Iterator iter = paths.iterator();
+        String newName = "";
+        
         while (iter.hasNext()) {
             
             String path = iter.next().toString();
@@ -43,7 +45,11 @@ public class RenameUtil {
                         String oldName = file.getName();
                         System.out.println("Old Name: " + oldName);
                         String extension = getExtension(oldName);
-                        String newName = name + "_" + i + extension;
+                        if (location.equals("Before Index")) {
+                            newName = name + separator + formatNum(i, numDigits) + extension;
+                        } else if(location.equals("After Index")){
+                            newName = formatNum(i, numDigits) + separator + name + extension;
+                        }
                         String newPath = path + "\\" + newName;
                         file.renameTo(new File(newPath));
                         System.out.println(oldName + " changed to " + newName);
