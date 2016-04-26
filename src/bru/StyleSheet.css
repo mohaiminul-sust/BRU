@@ -31,6 +31,13 @@ root {
     -fx-text-fill: #0d516e;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );    
 }
+
+.accordion-label {
+    -fx-font-size: 100%; 
+    -fx-text-fill: #0d516e;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );    
+}
+
 .menu {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";

@@ -3,14 +3,17 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="613.0" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bru.FXMLDocumentController">
     <children>
@@ -43,7 +46,25 @@
         <panes>
           <TitledPane animated="false" text="Indexed Renaming">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="10.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Pattern Header" />
+                              <TextField fx:id="patternHeader" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Location" />
+                              <ComboBox fx:id="patternLocation" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="210.0" layoutY="10.0" prefHeight="89.0" prefWidth="184.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Index starting at" />
+                              <TextField fx:id="startingAt" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="# of digits" />
+                              <TextField fx:id="numberOfDigits" prefHeight="25.0" prefWidth="184.0" />
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
             </content>
           </TitledPane>
           <TitledPane animated="false" text="Pattern Renaming">

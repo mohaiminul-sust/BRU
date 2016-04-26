@@ -22,8 +22,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -43,6 +46,10 @@ public class FXMLDocumentController implements Initializable {
     public ListView fileList;
     public Button removeButton;
     public Button removeAllButton;
+    public TextField patternHeader;
+    public TextField startingAt;
+    public ComboBox patternLocation;
+    public TextField numberOfDigits;
     
     @FXML
     private void handleExitFileMenuAction(ActionEvent event) {
@@ -120,8 +127,13 @@ public class FXMLDocumentController implements Initializable {
                 System.err.println("Item not in hashmap !");
             }
         }
-        System.out.println(paths);
-
+        
+        String pattern = patternHeader.getText();
+        String location = patternLocation.getValue().toString();
+        int startsAt = Integer.valueOf(startingAt.getText());
+        int numDigits = Integer.valueOf(numberOfDigits.getText());
+        
+        //call renamer func from RenameUtil Class
     }
     
     @FXML
@@ -155,6 +167,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        initAccordianIR();
         initList();
         fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }    
@@ -166,6 +179,22 @@ public class FXMLDocumentController implements Initializable {
         fileList.setItems(listItems);
         fileList.setDisable(true);
         printHashMap(); //debug
+    }
+    
+    private void initAccordianIR(){
+        //pattern header
+        patternHeader.setText("dummy");
+        
+        //location
+        ObservableList<String> patternLocationChoices = FXCollections.observableArrayList("Before Index", "After Index");
+        patternLocation.setItems(patternLocationChoices);
+        patternLocation.setValue("Before Index");
+        
+        //index starting at
+        startingAt.setText("1");
+        
+        //# of digits
+        numberOfDigits.setText("2");
     }
    
     private static void configureFileChooser(final FileChooser fileChooser, String title){

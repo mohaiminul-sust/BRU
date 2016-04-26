@@ -67,4 +67,11 @@ public class RenameUtil {
             return "";
         }
     }
+    
+    private int formatNum(int num, int digits){
+        
+        String format = String.format("%%0%dd", digits);
+        String result = String.format(format, num);
+        return Integer.valueOf(result);
+    }
 }
