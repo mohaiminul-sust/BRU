@@ -21,12 +21,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -50,6 +52,12 @@ public class FXMLDocumentController implements Initializable {
     public TextField startingAt;
     public ComboBox patternLocation;
     public TextField numberOfDigits;
+    public Accordion optionContainer;
+    public TitledPane renameIndexedPane;
+    public TitledPane renamePatternPane;    
+    public TitledPane renameMetaPane;
+
+
     
     @FXML
     private void handleExitFileMenuAction(ActionEvent event) {
@@ -168,6 +176,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initAccordianIR();
+        initAccordian();
         initList();
         fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }    
@@ -179,6 +188,10 @@ public class FXMLDocumentController implements Initializable {
         fileList.setItems(listItems);
         fileList.setDisable(true);
         printHashMap(); //debug
+    }
+    
+    private void initAccordian(){
+        optionContainer.setExpandedPane(renameIndexedPane);
     }
     
     private void initAccordianIR(){
