@@ -141,6 +141,8 @@ public class FXMLDocumentController implements Initializable {
         int startsAt = Integer.valueOf(startingAt.getText());
         int numDigits = Integer.valueOf(numberOfDigits.getText());
         
+        System.out.println("Paths to rename: "+paths);
+        
         //call renamer func from RenameUtil Class
         BRU = new RenameUtil(paths);
         BRU.IndexedRenaming(startsAt, pattern, location, separator, numDigits);

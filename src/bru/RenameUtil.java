@@ -6,7 +6,6 @@
 package bru;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +15,7 @@ import java.util.List;
  */
 public class RenameUtil {
 
-    private List<String> paths;
-    private final HashMap<String, String> map = new HashMap<>();
+    private final List<String> paths;
 
     public RenameUtil(List<String> paths) {
         this.paths = paths;
@@ -27,17 +25,34 @@ public class RenameUtil {
 
         Iterator iter = paths.iterator();
         String newName = "";
-        
+
+        int i_file = starts_from;
+
         while (iter.hasNext()) {
-            
+
             String path = iter.next().toString();
             System.out.println("Selected Path for indexed renaming: " + path);
 
             File dir = new File(path);
 
+            String parent = dir.getParent();
+
             if (dir.exists()) {
 
-                if (dir.isDirectory()) {
+                if (dir.isFile()) {
+                    String oldName = dir.getName();
+                    System.out.println("Old Name: " + oldName);
+                    String extension = getExtension(oldName);
+                    if (location.equals("Before Index")) {
+                        newName = name + separator + formatNum(i_file, numDigits) + extension;
+                    } else if (location.equals("After Index")) {
+                        newName = formatNum(i_file, numDigits) + separator + name + extension;
+                    }
+                    String newPath = parent + "\\" + newName;
+                    dir.renameTo(new File(newPath));
+                    System.out.println(oldName + " changed to " + newName);
+                    i_file++;
+                } else if (dir.isDirectory()) {
                     File[] files = dir.listFiles();
 
                     int i = starts_from;
@@ -47,7 +62,7 @@ public class RenameUtil {
                         String extension = getExtension(oldName);
                         if (location.equals("Before Index")) {
                             newName = name + separator + formatNum(i, numDigits) + extension;
-                        } else if(location.equals("After Index")){
+                        } else if (location.equals("After Index")) {
                             newName = formatNum(i, numDigits) + separator + name + extension;
                         }
                         String newPath = path + "\\" + newName;
@@ -55,11 +70,9 @@ public class RenameUtil {
                         System.out.println(oldName + " changed to " + newName);
                         i++;
                     }
-                } else if (dir.isFile()) {
-                    System.out.println("indexed renaming not supported for single file");
                 }
 
-                System.out.println("task finished !");
+                System.out.println("task finished for " + dir.getName() + " !");
 
             }
         }
@@ -73,9 +86,9 @@ public class RenameUtil {
             return "";
         }
     }
-    
-    private int formatNum(int num, int digits){
-        
+
+    private int formatNum(int num, int digits) {
+
         String format = String.format("%%0%dd", digits);
         String result = String.format(format, num);
         return Integer.valueOf(result);
