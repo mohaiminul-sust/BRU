@@ -40,6 +40,7 @@ public class FXMLDocumentController implements Initializable {
     
     private final Desktop desktop = Desktop.getDesktop();
     private ObservableList<String> listItems;
+//    private ObservableList<String> BackuplistItems;
     private HashMap<String, String> filePaths = new HashMap<>();
     private RenameUtil BRU;
     
@@ -146,6 +147,11 @@ public class FXMLDocumentController implements Initializable {
         //call renamer func from RenameUtil Class
         BRU = new RenameUtil(paths);
         BRU.IndexedRenaming(startsAt, pattern, location, separator, numDigits);
+        
+        //repopulate listView with changed files
+        initList();
+        
+        
     }
     
     @FXML
