@@ -58,8 +58,11 @@ public class FXMLDocumentController implements Initializable {
     public TitledPane renameIndexedPane;
     public TitledPane renamePatternPane;    
     public TitledPane renameMetaPane;
-
-
+    public TextField numChar;
+    public ComboBox startLoc;
+    public ComboBox patternMode;
+    public TextField toAppend;
+    
     
     @FXML
     private void handleExitFileMenuAction(ActionEvent event) {
@@ -186,6 +189,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initAccordianIR();
+        initAccordianPR();
         initAccordian();
         initList();
         fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -211,7 +215,7 @@ public class FXMLDocumentController implements Initializable {
         //location
         ObservableList<String> patternLocationChoices = FXCollections.observableArrayList("Before Index", "After Index");
         patternLocation.setItems(patternLocationChoices);
-        patternLocation.setValue("Before Index");
+        patternLocation.setValue(patternLocationChoices.get(0));
         
         //index starting at
         startingAt.setText("1");
@@ -221,6 +225,34 @@ public class FXMLDocumentController implements Initializable {
         
         //set separator
         nameSeparator.setText("_");
+    }
+    
+    private void initAccordianPR(){
+        
+        numChar.setText("");
+        
+        ObservableList<String> startLocs = FXCollections.observableArrayList("Start", "End");
+        startLoc.setItems(startLocs);
+        startLoc.setValue(startLocs.get(0));
+    
+        ObservableList<String> renameModes = FXCollections.observableArrayList("Remove", "Append");
+        patternMode.setItems(renameModes);
+        patternMode.setValue(renameModes.get(0));
+        
+        toAppend.setDisable(true);
+        
+    }
+    
+    @FXML
+    private void handleModeComboAction(ActionEvent event){
+        
+        String mode = patternMode.getValue().toString();
+        
+        if(mode.equals("Remove")){
+            toAppend.setDisable(true);
+        }else if(mode.equals("Append")){
+            toAppend.setDisable(false);
+        }
     }
    
     private static void configureFileChooser(final FileChooser fileChooser, String title){

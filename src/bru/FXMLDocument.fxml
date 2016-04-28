@@ -74,7 +74,25 @@
           </TitledPane>
           <TitledPane fx:id="renamePatternPane" animated="false" text="Pattern Renaming">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="15.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="No of character(s)" />
+                              <TextField fx:id="numChar" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Start from" />
+                              <ComboBox fx:id="startLoc" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="232.0" layoutY="16.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Mode" />
+                              <ComboBox fx:id="patternMode" onAction="#handleModeComboAction" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Append Text" />
+                              <TextField fx:id="toAppend" prefHeight="25.0" prefWidth="184.0" />
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
             </content>
           </TitledPane>
           <TitledPane fx:id="renameMetaPane" animated="false" prefHeight="188.0" prefWidth="613.0" text="Meta Editing">

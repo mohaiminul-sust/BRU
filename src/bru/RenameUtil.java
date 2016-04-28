@@ -34,11 +34,9 @@ public class RenameUtil {
             System.out.println("Selected Path for indexed renaming: " + path);
 
             File dir = new File(path);
-
             String parent = dir.getParent();
 
             if (dir.exists()) {
-
                 if (dir.isFile()) {
                     String oldName = dir.getName();
                     System.out.println("Old Name: " + oldName);
@@ -71,13 +69,14 @@ public class RenameUtil {
                         i++;
                     }
                 }
-
                 System.out.println("task finished for " + dir.getName() + " !");
-
             }
         }
     }
-
+    
+    public void nRenaming(){
+        
+    }
     private static String getExtension(String fileName) {
 
         try {
