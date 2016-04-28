@@ -62,10 +62,12 @@ root {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
 
-.custom-button {
-    -fx-font: 16px "Serif";
-    -fx-padding: 10;
-    -fx-background-color: #CCFF99;
+.rename-button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 .list-cell {
     -fx-background-color: #d5d5d5;

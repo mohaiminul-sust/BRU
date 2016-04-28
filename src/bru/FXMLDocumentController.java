@@ -192,7 +192,6 @@ public class FXMLDocumentController implements Initializable {
         initAccordianPR();
         initAccordian();
         initList();
-        fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }    
     
     //empty file list and listItems
@@ -201,6 +200,7 @@ public class FXMLDocumentController implements Initializable {
         filePaths.clear();
         fileList.setItems(listItems);
         fileList.setDisable(true);
+        fileList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         printHashMap(); //debug
     }
     
