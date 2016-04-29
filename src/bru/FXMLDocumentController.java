@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -31,6 +32,7 @@ import javafx.scene.control.TitledPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -56,7 +58,7 @@ public class FXMLDocumentController implements Initializable {
     public TextField numberOfDigits;
     public Accordion optionContainer;
     public TitledPane renameIndexedPane;
-    public TitledPane renamePatternPane;    
+    public TitledPane renameNRenamePane;    
     public TitledPane renameMetaPane;
     public TextField numChar;
     public ComboBox startLoc;
@@ -125,8 +127,14 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void handleRenameFileAction(ActionEvent event){
+    private void handleIndexedRenameFileAction(ActionEvent event){
         ObservableList<String> list = fileList.getItems();
+        
+        if(list.contains("No files or directory selected")){
+            
+            return;
+        }
+        
         List<String> paths = new ArrayList<String>();
 
         for (String listItem: list){
@@ -144,6 +152,10 @@ public class FXMLDocumentController implements Initializable {
         String separator = nameSeparator.getText().toString();
         int startsAt = Integer.valueOf(startingAt.getText());
         int numDigits = Integer.valueOf(numberOfDigits.getText());
+        
+        if(pattern == ""){
+            separator = "";
+        }
         
         System.out.println("Paths to rename: "+paths);
         

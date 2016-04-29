@@ -69,6 +69,12 @@ root {
     -fx-background-color: linear-gradient(#61a2b1, #2A5);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+
+
+.rename-button:hover {
+    -fx-background-color: linear-gradient(#2A5, #61a2b1);
+}
+
 .list-cell {
     -fx-background-color: #d5d5d5;
 }
