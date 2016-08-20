@@ -97,6 +97,7 @@
                               <TextField fx:id="toAppend" prefHeight="25.0" prefWidth="184.0" />
                            </children>
                         </VBox>
+                        <Button layoutX="511.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleNRenameFileAction" prefHeight="25.0" prefWidth="81.0" styleClass="rename-button" text="Rename" />
                      </children></AnchorPane>
             </content>
           </TitledPane>

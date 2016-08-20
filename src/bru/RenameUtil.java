@@ -73,10 +73,105 @@ public class RenameUtil {
             }
         }
     }
-    
-    public void nRenaming(){
-        
+
+    public void nRenaming(int numChar, String mode, String startLoc, String toAppend) {
+        Iterator iter = paths.iterator();
+        String newName = "";
+
+        while (iter.hasNext()) {
+
+            String path = iter.next().toString();
+            System.out.println("Selected Path for indexed renaming: " + path);
+
+            File dir = new File(path);
+            String parent = dir.getParent();
+
+            if (dir.exists()) {
+                if (dir.isFile()) {
+                    String oldName = dir.getName();
+                    System.out.println("Old Name: " + oldName);
+
+                    String extension = getExtension(oldName);
+                    System.out.println("EXT :: "+extension);
+
+                    String name = stripExtension(oldName);
+                    
+                    System.out.println("NAME :: "+name);
+                    
+                    if (mode.equals("Remove")) {
+                        if (startLoc.equals("End")) {
+                            name = removeNCharEnd(name, numChar);
+                            System.out.println("NAME ::::::: "+name);
+                            newName = name + extension;
+                        } else if (startLoc.equals("Start")) {
+                            name = removeNCharStart(name, numChar);
+                            System.out.println("NAME ::::::: "+name);
+                            newName = name + extension;
+                        }
+                    } else if (mode.equals("Append")) {
+                        if (toAppend == null || toAppend == "") {
+                            System.out.println("Nothing to Append!!");
+                            return;
+                        }
+
+                        if (startLoc.equals("End")) {
+                            name = name + toAppend;
+                            newName = name + extension;
+                        } else if (startLoc.equals("Start")) {
+                            name = toAppend + name;
+                            newName = name + extension;
+                        }
+                    }
+
+                    String newPath = parent + "\\" + newName;
+                    dir.renameTo(new File(newPath));
+                    System.out.println(oldName + " changed to " + newName);
+
+                } else if (dir.isDirectory()) {
+                    File[] files = dir.listFiles();
+
+                    for (File file : files) {
+                        String oldName = file.getName();
+                        System.out.println("Old Name: " + oldName);
+                        String extension = getExtension(oldName);
+                        String name = stripExtension(oldName);
+                        System.out.println("Name::::"+name);
+                        
+                        
+                        if (mode.equals("Remove")) {
+                            if (startLoc.equals("End")) {
+                                name = removeNCharEnd(name, numChar);                            
+                                System.out.println("NAME ::::::: "+name);
+                                newName = name + extension;
+                            } else if (startLoc.equals("Start")) {
+                                name = removeNCharStart(name, numChar);
+                                System.out.println("NAME ::::::: "+name);
+                                newName = name + extension;
+                            }
+                        } else if (mode.equals("Append")) {
+                            if(toAppend == null || toAppend == "") {
+                                System.out.println("Nothing to Append!!");
+                                return;
+                            }
+                            
+                            if (startLoc.equals("End")) {
+                                name = name + toAppend;
+                                newName = name + extension;
+                            } else if (startLoc.equals("Start")) {
+                                name = toAppend + name;
+                                newName = name + extension;
+                            }
+                        }
+                        String newPath = path + "\\" + newName;
+                        file.renameTo(new File(newPath));
+                        System.out.println(oldName + " changed to " + newName);
+                    }
+                }
+                System.out.println("task finished for " + dir.getName() + " !");
+            }
+        }
     }
+
     private static String getExtension(String fileName) {
 
         try {
@@ -86,6 +181,26 @@ public class RenameUtil {
         }
     }
 
+    private static String stripExtension(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        int pos = fileName.lastIndexOf(".");
+
+        if (pos == -1) { //No extension case
+            return fileName;
+        }
+        return fileName.substring(0, pos);
+    }
+    
+    private static String removeNCharEnd(String str, int numChar) {
+        return str.substring(0,str.length()- numChar);
+    }
+    
+    private static String removeNCharStart(String str, int numChar) {
+        return str.substring(numChar,str.length());
+    }
+    
     private int formatNum(int num, int digits) {
 
         String format = String.format("%%0%dd", digits);

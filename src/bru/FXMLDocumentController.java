@@ -131,6 +131,7 @@ public class FXMLDocumentController implements Initializable {
         ObservableList<String> list = fileList.getItems();
         
         if(list.contains("No files or directory selected")){
+            //dialogue pane code to do
             
             return;
         }
@@ -153,7 +154,7 @@ public class FXMLDocumentController implements Initializable {
         int startsAt = Integer.valueOf(startingAt.getText());
         int numDigits = Integer.valueOf(numberOfDigits.getText());
         
-        if(pattern == ""){
+        if(pattern.isEmpty()){
             separator = "";
         }
         
@@ -167,6 +168,48 @@ public class FXMLDocumentController implements Initializable {
         initList();
         
         
+    }
+    
+    @FXML
+    private void handleNRenameFileAction(ActionEvent event){
+        ObservableList<String> list = fileList.getItems();
+        
+        if(list.contains("No files or directory selected")){
+            //dialogue pane code to do
+            
+            return;
+        }
+        
+        List<String> paths = new ArrayList<String>();
+
+        for (String listItem: list){
+            if(filePaths.containsKey(listItem)){
+                String mapItem = filePaths.get(listItem);
+                String path = getPath(mapItem);
+                paths.add(path);
+            }else{
+                System.err.println("Item not in hashmap !");
+            }
+        }
+        
+        int numCh = Integer.parseInt(numChar.getText());
+        String mode = patternMode.getValue().toString();
+        String sLoc = startLoc.getValue().toString();
+        String stAppend = toAppend.getText();
+        
+        System.out.println("Paths to rename: "+paths);
+        
+        //numChar exception catcher
+        if (numCh < 0) {
+            System.out.println("Invalid");
+            return;
+        }
+        //call renamer func from RenameUtil Class
+        BRU = new RenameUtil(paths);
+        BRU.nRenaming(numCh, mode, sLoc, stAppend);
+        
+        //repopulate listView with changed files
+        initList();
     }
     
     @FXML
@@ -201,7 +244,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initAccordianIR();
-        initAccordianPR();
+        initAccordianNR();
         initAccordian();
         initList();
     }    
@@ -239,7 +282,7 @@ public class FXMLDocumentController implements Initializable {
         nameSeparator.setText("_");
     }
     
-    private void initAccordianPR(){
+    private void initAccordianNR(){
         
         numChar.setText("");
         
@@ -262,8 +305,12 @@ public class FXMLDocumentController implements Initializable {
         
         if(mode.equals("Remove")){
             toAppend.setDisable(true);
+            numChar.setDisable(false);
+            numChar.requestFocus();
         }else if(mode.equals("Append")){
+            numChar.setDisable(true);
             toAppend.setDisable(false);
+            toAppend.requestFocus();
         }
     }
    
