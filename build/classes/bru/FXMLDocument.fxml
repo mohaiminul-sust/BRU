@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="613.0" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bru.FXMLDocumentController">
+    <children>
+      <MenuBar prefHeight="25.0" prefWidth="619.0" styleClass="root" stylesheets="@StyleSheet.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleOpenFileMenuAction" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpenDirectoryFileMenuAction" text="Open Directory" />
+                  <MenuItem mnemonicParsing="false" text="Rename" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExitFileMenuAction" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="List">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleListMenuRemoveAction" text="Remove" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleListMenuRemoveAllAction" text="Remove All" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ListView fx:id="fileList" layoutY="295.0" prefHeight="178.0" prefWidth="619.0" styleClass="list-cell" stylesheets="@StyleSheet.css">
+         <effect>
+            <InnerShadow blurType="GAUSSIAN" color="#157cd0" />
+         </effect>
+      </ListView>
+      <Label layoutX="6.0" layoutY="265.0" prefHeight="21.0" prefWidth="113.0" stylesheets="@StyleSheet.css" text="Rename Queue" />
+      <Accordion fx:id="optionContainer" layoutY="50.0" prefHeight="196.0" prefWidth="619.0" styleClass="list-cell" stylesheets="@StyleSheet.css">
+        <panes>
+          <TitledPane fx:id="renameIndexedPane" animated="false" text="Indexed Renaming">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="10.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Pattern Header" />
+                              <TextField fx:id="patternHeader" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Location" />
+                              <ComboBox fx:id="patternLocation" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="210.0" layoutY="10.0" prefHeight="89.0" prefWidth="184.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Index starting at" />
+                              <TextField fx:id="startingAt" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="# of digits" />
+                              <TextField fx:id="numberOfDigits" prefHeight="25.0" prefWidth="184.0" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="405.0" layoutY="10.0" prefHeight="89.0" prefWidth="184.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Separator" />
+                              <TextField fx:id="nameSeparator" prefHeight="25.0" prefWidth="184.0" />
+                              <Button mnemonicParsing="false" onAction="#handleIndexedRenameFileAction" prefHeight="25.0" prefWidth="72.0" styleClass="rename-button" stylesheets="@StyleSheet.css" text="Rename">
+                                 <VBox.margin>
+                                    <Insets left="110.0" top="20.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="renameNRenamePane" animated="false" text="Bulk 'n' Renaming">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="15.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="No of character(s)" />
+                              <TextField fx:id="numChar" prefHeight="25.0" prefWidth="184.0" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Start from" />
+                              <ComboBox fx:id="startLoc" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="232.0" layoutY="16.0">
+                           <children>
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Mode" />
+                              <ComboBox fx:id="patternMode" onAction="#handleModeComboAction" prefHeight="25.0" prefWidth="184.0" visibleRowCount="2" />
+                              <Label styleClass="accordion-label" stylesheets="@StyleSheet.css" text="Append Text" />
+                              <TextField fx:id="toAppend" prefHeight="25.0" prefWidth="184.0" />
+                           </children>
+                        </VBox>
+                        <Button layoutX="511.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleNRenameFileAction" prefHeight="25.0" prefWidth="81.0" styleClass="rename-button" text="Rename" />
+                     </children></AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="renameMetaPane" animated="false" prefHeight="188.0" prefWidth="613.0" text="Meta Editing">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+      <Button fx:id="removeButton" layoutX="451.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleListMenuRemoveAction" stylesheets="@StyleSheet.css" text="Remove" />
+      <Button fx:id="removeAllButton" layoutX="524.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleListMenuRemoveAllAction" stylesheets="@StyleSheet.css" text="Remove All" />
+      <Label layoutX="361.0" prefHeight="50.0" prefWidth="257.0" styleClass="header-label" stylesheets="@StyleSheet.css" text="BULK RENAMING UTILITY" />
+    </children>
+</AnchorPane>
